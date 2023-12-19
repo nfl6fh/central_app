@@ -16,20 +16,22 @@
                 <a class="nav-link" href="{% url 'central:home' %}">Home</a>
                 {% if user.is_authenticated %}
                 <ul class="navbar-nav">
-                    <li class="nav-item active"><a class="nav-link" href="{% url 'central:home' %}">VRA Central</a></li>
+                    {% comment %} <li class="nav-item active"><a class="nav-link" href="{% url 'central:home' %}">VRA Central</a></li> {% endcomment %}
                     <li class="nav-item active"><a class="nav-link" href="{% url 'central:extra_work' %}">Extra Work</a></li>
                     <li class="nav-item active"><a class="nav-link" href="{% url 'central:absences' %}">Absences</a></li>
                     <li class="nav-item active"><a class="nav-link" href="{% url 'central:profile' user.id %}">Profile</a></li>
                 </ul>
                 {% endif %}
             </div>
-            {% if user.is_authenticated %}
-                <li class="nav-item active"><a class="nav-link" href="{% url 'tutor_me:logout' %}">Logout</a></li>
-            {% else %}
-                <form action="{% provider_login_url 'google' %}" class="form-button">
-                    <button type="submit" class="login-button">Login</button>
-                </form>
-            {% endif %}
+            <ul class="navbar-nav">
+                {% if user.is_authenticated %}
+                    <li class="nav-item active"><a class="nav-link" href="{% url 'central:logout' %}">Logout</a></li>
+                {% else %}
+                    <form action="{% provider_login_url 'google' %}" class="form-button">
+                        <button type="submit" class="login-button">Login</button>
+                    </form>
+                {% endif %}
+            </ul>
         </nav>
     </body>
 </html>
