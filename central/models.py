@@ -1,3 +1,42 @@
 from django.db import models
+from django.contrib.auth.models import User as auth_user
 
-# Create your models here.
+
+class User(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField(max_length=100)
+    is_admin = models.BooleanField(default=False)
+    auth_user = models.OneToOneField(auth_user, on_delete=models.CASCADE, null=True)
+    grad_year = models.IntegerField(default=9999)
+    is_port = models.BooleanField(default=False)
+    is_starboard = models.BooleanField(default=False)
+    is_rookie = models.BooleanField(default=True)
+    total_minutes = models.IntegerField(default=0)
+    total_absences = models.IntegerField(default=0)
+
+class Absence(models.Model):
+    athlete = models.ForeignKey(User, on_delete=models.CASCADE, related_name='absences')
+    date = models.DateField(blank=True)
+    reason = models.CharField(max_length=200)
+
+class Extra_Workout(models.Model):
+    athlete = models.ForeignKey(User, on_delete=models.CASCADE, related_name='extra_workouts')
+    date = models.DateField(blank=True)
+    minutes = models.IntegerField(default=0)
+    description = models.CharField(max_length=200)
+
+class Shell(models.Model):
+    name = models.CharField(max_length=50)
+    is_coxed = models.BooleanField(default=True)
+    n_rowers = models.IntegerField(default=8)
+    is_port_stroke = models.BooleanField(default=True)
+
+class Lineup(models.Model):
+    shell = models.ForeignKey(Shell, on_delete=models.CASCADE, related_name='lineups')
+    oars = models.CharField(max_length=50)
+    coxswain = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='boats_coxed', null=True)
+    rowers = models.ManyToManyField(User, blank=True)
+    coach = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='boats_coached', null=True)
+    launch = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='boats_launched', null=True)
+    is_port_stroke = models.BooleanField(default=True)
+    date = models.DateField(blank=True)
