@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-lypg)@)#9vs-@)pxc5oquv%t07^8)zzes2alr=9dlw=us)0x^x
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', 'vra-central.herokuapp.com']
+ALLOWED_HOSTS = ['localhost', 'vra-central-*.herokuapp.com']
 
 
 # Application definition
