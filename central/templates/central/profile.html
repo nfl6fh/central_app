@@ -20,9 +20,9 @@
     });
 </script>
 
-        <div style="margin-left: 5px; margin-right: 5px">
-            <h1>{{ user.user.name }}'s profile</h1>
+        <div style="margin-left: 5px; margin-right: 5px; display: flex">
             <div name="edit_user" style="width: 50%">
+                <h1>{{ user.user.name }}'s profile</h1>
                 <form action="{% url 'central:edit_user' user.id %}" method="post">
                     {% csrf_token %}
                 <fieldset>
@@ -64,10 +64,14 @@
                             <label for="is_rookie">No</label>
                         </div>
                 </fieldset>
+                <br>
                 {% buttons %}
                     <button class="btn btn-info my-2 my-sm-0" style="color: white" type="submit">Submit</button>    
                 {% endbuttons %}
                 </form>
+            </div>
+            <div>
+                <h2>Your most recent lineup:</h2>
             </div>
         </div>
     </body>

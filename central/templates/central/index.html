@@ -45,14 +45,17 @@
                         <p>Name (First and Last):</p>
                         <input type="text" class="form-control" name="name"/>
                     </div>
+                    <br>
                     <div class="form-group" style="width: 30%">
                         <p>Email:</p>
                         <input type="email" class="form-control" name="email"/>
                     </div>
+                    <br>
                     <div class="form-group">
                         <p>Graduation year:</p>
                         <input name="grad_year" type="number" min="2024" max="2099" step="1" value="2024"/>
                     </div>
+                    <br>
                     <div class="form-group">
                         <p>Select which side(s) you row:</p>
                         <div class="form-check">
@@ -64,6 +67,7 @@
                             <label for="is_port" style="color: red">Port</label>
                         </div>
                     </div>
+                    <br>
                     <div class="form-group">
                         <p>Are you a rookie?</p>
                         <div class="form-check">
@@ -75,6 +79,7 @@
                             <label for="is_rookie">No</label>
                         </div>
                 </fieldset>
+                <br>
                 {% buttons %}
                     <button class="btn btn-info my-2 my-sm-0" style="color: white" type="submit">Submit</button>    
                 {% endbuttons %}
