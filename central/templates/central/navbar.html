@@ -8,15 +8,16 @@
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500&family=Poppins&family=Raleway:wght@500&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
-<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #7692FF">
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #232D4B">
     <div class="navbar-collapse" id="navbarSupportedContent" style="margin-left: 5px">
-        <a class="nav-link" href="{% url 'central:home' %}">Home</a>
+        <h1 style="color: #E57200">VRA Central</h1>
         {% if user.is_authenticated and user.user.is_approved %}
         <ul class="navbar-nav">
             {% comment %} <li class="nav-item active"><a class="nav-link" href="{% url 'central:home' %}">VRA Central</a></li> {% endcomment %}
             {% if user.user.is_admin %}
                 <li class="nav-item active"><a class="nav-link" href="{% url 'central:coaches_view' %}" style="color: red">Admin</a></li>
             {% endif %}
+            <li class="nav-item active"><a class="nav-link" href="{% url 'central:home' %}">Home</a></li>
             <li class="nav-item active"><a class="nav-link" href="{% url 'central:extra_work' %}">Extra Work</a></li>
             <li class="nav-item active"><a class="nav-link" href="{% url 'central:absences' %}">Absences</a></li>
             <li class="nav-item active"><a class="nav-link" href="{% url 'central:profile' %}">Profile</a></li>
@@ -27,9 +28,10 @@
         {% if user.is_authenticated %}
             <li class="nav-item active"><a class="nav-link" href="{% url 'central:logout' %}">Logout</a></li>
         {% else %}
-            <form action="{% provider_login_url 'google' %}" class="form-button">
+            {% comment %} <form action="{% provider_login_url 'google' %}" class="form-button">
                 <button type="submit" class="login-button">Login</button>
-            </form>
+            </form> {% endcomment %}
+            <li class="nav-item active"><a class="nav-link" href="{% provider_login_url 'google' %}">Login</a></li>
         {% endif %}
     </ul>
 </nav>
