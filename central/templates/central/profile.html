@@ -30,48 +30,36 @@
                 {% if user.is_authenticated %}
                     <li class="nav-item active"><a class="nav-link" href="{% url 'central:logout' %}">Logout</a></li>
                 {% else %}
-                    {% comment %} <form action="{% provider_login_url 'google' %}" class="form-button">
+                    <form action="{% provider_login_url 'google' %}" class="form-button">
                         <button type="submit" class="login-button">Login</button>
-                    </form> {% endcomment %}
-                    <li class="nav-item active"><a class="nav-link" href="{% provider_login_url 'google' %}">Login</a></li>
+                    </form>
                 {% endif %}
             </ul>
         </nav>
+        
         <div style="margin-left: 5px; margin-right: 5px">
-            {% if retry %}
-            <div class="alert alert-danger" role="alert">
-                <strong>Sorry!</strong> Your input for {{ bad_input }} caused an issue
-            </div>
-            {% endif %}
-        {% if user.user %}
-            <h1>Welcome {{ user.user.name }}!</h1>
-            {% if user.user.is_approved %}
-            {% comment %} Put all content inside of this if block {% endcomment %}
-                <h3>Congratulations, you've been approved</h3>
-            {% else %}
-                <h3>Your profile is being reviewed and you should be allowed access shortly</h3>
-                <p>If you remain unapproved for an extended period of time please contact a coach</p>
-            {% endif %}
-        {% else %}
-            {% if user.is_authenticated %}
-            <h1>Please enter your details below so you can be approved</h1>
-            <form action="{% url 'central:create_user' user.id %}" method="post">
-                {% csrf_token %}
+            <h1>{{ user.user.name }}'s profile</h1>
+            <div name="edit_user" style="width: 50%">
+                <form action="{% url 'central:edit_user' user.id %}" method="post">
+                    {% csrf_token %}
                 <fieldset>
                     <div class="form-group" style="width: 30%">
                         <p>Name (First and Last):</p>
-                        <input type="text" class="form-control" name="name"/>
+                        <input type="text" class="form-control" name="name" value="{{user.user.name}}"/>
                     </div>
+                    <br>
                     <div class="form-group" style="width: 30%">
                         <p>Email:</p>
-                        <input type="email" class="form-control" name="email"/>
+                        <input type="email" class="form-control" name="email" value="{{user.user.email}}"/>
                     </div>
+                    <br>
                     <div class="form-group">
                         <p>Graduation year:</p>
-                        <input name="grad_year" type="number" min="2024" max="2099" step="1" value="2024"/>
+                        <input name="grad_year" type="number" min="2024" max="2099" step="1" value="{{user.user.grad_year}}"/>
                     </div>
+                    <br>
                     <div class="form-group">
-                        <p>Select which side(s) you row:</p>
+                        <p>Side(s) you row (Current selections: Starboard: {{user.user.is_starboard}} and Port: {{user.user.is_port}}):</p>
                         <div class="form-check">
                             <input class="form-check-input" name="is_starboard" type="checkbox" value="True"/>
                             <label for="is_starboard" style="color: green">Starboard</label>
@@ -81,8 +69,9 @@
                             <label for="is_port" style="color: red">Port</label>
                         </div>
                     </div>
+                    <br>
                     <div class="form-group">
-                        <p>Are you a rookie?</p>
+                        <p>Rookie (Current value: {{user.user.is_rookie}}):</p>
                         <div class="form-check">
                             <input class="form-check-input" name="is_rookie" type="radio" value="True"/>
                             <label for="is_rookie">Yes</label>
@@ -95,11 +84,8 @@
                 {% buttons %}
                     <button class="btn btn-info my-2 my-sm-0" style="color: white" type="submit">Submit</button>    
                 {% endbuttons %}
-            </form> 
-            {% else %}
-            <h1>Please login to gain access to this application</h1>
-            {% endif %}
-        {% endif %}
+                </form>
+            </div>
         </div>
     </body>
 </html>

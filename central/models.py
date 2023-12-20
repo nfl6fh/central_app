@@ -6,6 +6,7 @@ class User(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField(max_length=100)
     is_admin = models.BooleanField(default=False)
+    is_approved = models.BooleanField(default=False)
     auth_user = models.OneToOneField(auth_user, on_delete=models.CASCADE, null=True)
     grad_year = models.IntegerField(default=9999)
     is_port = models.BooleanField(default=False)
@@ -13,6 +14,9 @@ class User(models.Model):
     is_rookie = models.BooleanField(default=True)
     total_minutes = models.IntegerField(default=0)
     total_absences = models.IntegerField(default=0)
+
+    def __str__(self):
+        return f'{self.name} ({self.email})'
 
 class Absence(models.Model):
     athlete = models.ForeignKey(User, on_delete=models.CASCADE, related_name='absences')

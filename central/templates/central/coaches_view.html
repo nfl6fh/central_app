@@ -1,0 +1,9 @@
+<h1>Coaches_view</h1>
+{% if unapproved_users %}
+<p>Unapproved users:</p>
+{% for user in unapproved_users %}
+ {{ user }}
+{% endfor %}
+{% else %}
+<p>No unapproved users</p>
+{% endif %}
