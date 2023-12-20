@@ -52,4 +52,27 @@ class CoachesView(LoginRequiredMixin, generic.TemplateView):
         return context
 
 def edit_user(request, user_id):
-    return HttpResponse('User being edited')
+    a_user = get_object_or_404(auth_user, pk=user_id)
+    user = get_object_or_404(User, auth_user=a_user)
+
+    print(request)
+
+    if 'name' in request.POST:
+        user.name = request.POST['name']
+    if 'email' in request.POST:
+        user.email = request.POST['email']
+    if 'grad_year' in request.POST:
+        user.grad_year = request.POST['grad_year']
+    if 'is_port' in request.POST:
+        user.is_port = request.POST['is_port']
+    elif user.is_port:
+        user.is_port = False
+    if 'is_starboard' in request.POST:
+        user.is_starboard = request.POST['is_starboard']
+    elif user.is_starboard:
+        user.is_starboard = False
+    if 'is_rookie' in request.POST:
+        user.is_rookie = request.POST['is_rookie']
+    user.save()
+
+    return HttpResponseRedirect(reverse('central:profile'))

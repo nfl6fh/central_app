@@ -11,32 +11,15 @@
 <html>
     <title>VRA Central</title>
     <body>
-        <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #7692FF">
-            <div class="navbar-collapse" id="navbarSupportedContent" style="margin-left: 5px">
-                <a class="nav-link" href="{% url 'central:home' %}">Home</a>
-                {% if user.is_authenticated and user.user.is_approved %}
-                <ul class="navbar-nav">
-                    {% comment %} <li class="nav-item active"><a class="nav-link" href="{% url 'central:home' %}">VRA Central</a></li> {% endcomment %}
-                    {% if user.user.is_admin %}
-                        <li class="nav-item active"><a class="nav-link" href="{% url 'central:coaches_view' %}" style="color: red">Admin</a></li>
-                    {% endif %}
-                    <li class="nav-item active"><a class="nav-link" href="{% url 'central:extra_work' %}">Extra Work</a></li>
-                    <li class="nav-item active"><a class="nav-link" href="{% url 'central:absences' %}">Absences</a></li>
-                    <li class="nav-item active"><a class="nav-link" href="{% url 'central:profile' %}">Profile</a></li>
-                </ul>
-                {% endif %}
-            </div>
-            <ul class="navbar-nav">
-                {% if user.is_authenticated %}
-                    <li class="nav-item active"><a class="nav-link" href="{% url 'central:logout' %}">Logout</a></li>
-                {% else %}
-                    {% comment %} <form action="{% provider_login_url 'google' %}" class="form-button">
-                        <button type="submit" class="login-button">Login</button>
-                    </form> {% endcomment %}
-                    <li class="nav-item active"><a class="nav-link" href="{% provider_login_url 'google' %}">Login</a></li>
-                {% endif %}
-            </ul>
-        </nav>
+        <div id="navbar"></div>
+<script>
+  fetch('navbar')
+    .then(response => response.text())
+    .then(data => {
+      document.getElementById('navbar').innerHTML = data;
+    });
+</script>
+
         <div style="margin-left: 5px; margin-right: 5px">
             {% if retry %}
             <div class="alert alert-danger" role="alert">
@@ -47,7 +30,7 @@
             <h1>Welcome {{ user.user.name }}!</h1>
             {% if user.user.is_approved %}
             {% comment %} Put all content inside of this if block {% endcomment %}
-                <h3>Congratulations, you've been approved</h3>
+                <h3>Congratulations, you've been approved!</h3>
             {% else %}
                 <h3>Your profile is being reviewed and you should be allowed access shortly</h3>
                 <p>If you remain unapproved for an extended period of time please contact a coach</p>

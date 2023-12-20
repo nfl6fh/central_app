@@ -11,32 +11,15 @@
 <html>
     <title>VRA Central</title>
     <body>
-        <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #7692FF">
-            <div class="navbar-collapse" id="navbarSupportedContent" style="margin-left: 5px">
-                <a class="nav-link" href="{% url 'central:home' %}">Home</a>
-                {% if user.is_authenticated and user.user.is_approved %}
-                <ul class="navbar-nav">
-                    {% comment %} <li class="nav-item active"><a class="nav-link" href="{% url 'central:home' %}">VRA Central</a></li> {% endcomment %}
-                    {% if user.user.is_admin %}
-                        <li class="nav-item active"><a class="nav-link" href="{% url 'central:coaches_view' %}" style="color: red">Admin</a></li>
-                    {% endif %}
-                    <li class="nav-item active"><a class="nav-link" href="{% url 'central:extra_work' %}">Extra Work</a></li>
-                    <li class="nav-item active"><a class="nav-link" href="{% url 'central:absences' %}">Absences</a></li>
-                    <li class="nav-item active"><a class="nav-link" href="{% url 'central:profile' %}">Profile</a></li>
-                </ul>
-                {% endif %}
-            </div>
-            <ul class="navbar-nav">
-                {% if user.is_authenticated %}
-                    <li class="nav-item active"><a class="nav-link" href="{% url 'central:logout' %}">Logout</a></li>
-                {% else %}
-                    <form action="{% provider_login_url 'google' %}" class="form-button">
-                        <button type="submit" class="login-button">Login</button>
-                    </form>
-                {% endif %}
-            </ul>
-        </nav>
-        
+        <div id="navbar"></div>
+<script>
+  fetch('navbar')
+    .then(response => response.text())
+    .then(data => {
+      document.getElementById('navbar').innerHTML = data;
+    });
+</script>
+
         <div style="margin-left: 5px; margin-right: 5px">
             <h1>{{ user.user.name }}'s profile</h1>
             <div name="edit_user" style="width: 50%">
@@ -61,11 +44,11 @@
                     <div class="form-group">
                         <p>Side(s) you row (Current selections: Starboard: {{user.user.is_starboard}} and Port: {{user.user.is_port}}):</p>
                         <div class="form-check">
-                            <input class="form-check-input" name="is_starboard" type="checkbox" value="True"/>
+                            <input class="form-check-input" name="is_starboard" type="checkbox" value="True" {% if user.user.is_starboard %} checked {% endif %}/>
                             <label for="is_starboard" style="color: green">Starboard</label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" name="is_port" type="checkbox" value="True"/>
+                            <input class="form-check-input" name="is_port" type="checkbox" value="True" {% if user.user.is_port %} checked {% endif %}/>
                             <label for="is_port" style="color: red">Port</label>
                         </div>
                     </div>
