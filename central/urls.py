@@ -16,4 +16,6 @@ urlpatterns = [
     path('edit_user/<int:user_id>/', views.edit_user, name='edit_user'),
     path('navbar/', TemplateView.as_view(template_name='central/navbar.html'), name='navbar'),
     path(r'*/navbar/', TemplateView.as_view(template_name='central/navbar.html'), name='navbar'),
+    path(r'*/navbar', TemplateView.as_view(template_name='central/navbar.html'), name='navbar'),
+    path('<int:pk>/profile', views.ProfileView.as_view(), name='profile_personal')
 ]

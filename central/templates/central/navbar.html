@@ -10,7 +10,7 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #232D4B">
     <div class="navbar-collapse" id="navbarSupportedContent" style="margin-left: 5px">
-        <h1 style="color: #E57200">VRA Central</h1>
+        <h1><a class="nav-link" href="{% url 'central:home' %}" style="color: #E57200">VRA Central</a></h1>
         {% if user.is_authenticated and user.user.is_approved %}
         <ul class="navbar-nav">
             {% comment %} <li class="nav-item active"><a class="nav-link" href="{% url 'central:home' %}">VRA Central</a></li> {% endcomment %}
@@ -20,7 +20,7 @@
             <li class="nav-item active"><a class="nav-link" href="{% url 'central:home' %}">Home</a></li>
             <li class="nav-item active"><a class="nav-link" href="{% url 'central:extra_work' %}">Extra Work</a></li>
             <li class="nav-item active"><a class="nav-link" href="{% url 'central:absences' %}">Absences</a></li>
-            <li class="nav-item active"><a class="nav-link" href="{% url 'central:profile' %}">Profile</a></li>
+            <li class="nav-item active"><a class="nav-link" href="{% url 'central:profile_personal' user.id %}">Profile</a></li>
         </ul>
         {% endif %}
     </div>

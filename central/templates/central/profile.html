@@ -13,7 +13,7 @@
     <body>
         <div id="navbar"></div>
 <script>
-  fetch('navbar')
+  fetch('/navbar/')
     .then(response => response.text())
     .then(data => {
       document.getElementById('navbar').innerHTML = data;
@@ -71,7 +71,14 @@
                 </form>
             </div>
             <div>
-                <h2>Your most recent lineup:</h2>
+                <h2>Your most recent lineup</h2>
+                <h4>Boat: {{lineup.shell.name}}</h4>
+                <h4>Oars: {{lineup.oars}}</h4>
+                <h4>Coxswain: {{lineup.coxswain.name}}</h4>
+                <h4>Rowers:</h4>
+                {% for r in lineup.rowers.all %}
+                <p>{{r.name}}</p>
+                {% endfor %}
             </div>
         </div>
     </body>

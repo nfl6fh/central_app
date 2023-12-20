@@ -76,3 +76,13 @@ def edit_user(request, user_id):
     user.save()
 
     return HttpResponseRedirect(reverse('central:profile'))
+
+class ProfileView(LoginRequiredMixin, generic.DetailView):
+    model = auth_user
+    template_name = 'central/profile.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = User.objects.filter(auth_user=self.request.user).first()
+        context['lineup'] = user.boats_rowed.order_by('-date').first()
+        return context

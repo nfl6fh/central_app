@@ -34,13 +34,18 @@ class Shell(models.Model):
     is_coxed = models.BooleanField(default=True)
     n_rowers = models.IntegerField(default=8)
     is_port_stroke = models.BooleanField(default=True)
+    is_scull = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f'{self.name} ({self.n_rowers}{"+" if self.is_coxed else "x" if self.is_scull else "-"} {"PORT" if self.is_port_stroke else "STBD"})'
 
 class Lineup(models.Model):
     shell = models.ForeignKey(Shell, on_delete=models.CASCADE, related_name='lineups')
     oars = models.CharField(max_length=50)
     coxswain = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='boats_coxed', null=True)
-    rowers = models.ManyToManyField(User, blank=True)
+    rowers = models.ManyToManyField(User, blank=True, related_name='boats_rowed')
     coach = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='boats_coached', null=True)
     launch = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='boats_launched', null=True)
     is_port_stroke = models.BooleanField(default=True)
     date = models.DateField(blank=True)
+    workout = models.CharField(max_length=300, default='')
