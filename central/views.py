@@ -86,3 +86,9 @@ class ProfileView(LoginRequiredMixin, generic.DetailView):
         user = User.objects.filter(auth_user=self.request.user).first()
         context['lineup'] = user.boats_rowed.order_by('-date').first()
         return context
+
+def accept_user(request, user_id):
+    pass
+
+def decline_user(request, user_id):
+    pass
